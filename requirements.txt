@@ -1,0 +1,13 @@
+# Tools
+hypothesis
+python-dotenv
+pytest
+pytest-cov
+
+# Formatting
+black
+
+# Packages
+numpy
+napari
+gsw

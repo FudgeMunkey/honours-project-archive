@@ -1,0 +1,3785 @@
+
+gsw.CT_first_derivatives(SA, pt)[source]
+
+    Calculates the following two derivatives of Conservative Temperature (1) CT_SA, the derivative with respect to Absolute Salinity at constant potential temperature (with pr = 0 dbar), and 2) CT_pt, the derivative with respect to potential temperature (the regular potential temperature which is referenced to 0 dbar) at constant Absolute Salinity.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        ptarray-like
+
+            Potential temperature referenced to a sea pressure, degrees C
+
+    Returns
+
+        CT_SAarray-like, K/(g/kg)
+
+            The derivative of Conservative Temperature with respect to Absolute Salinity at constant potential temperature (the regular potential temperature which has reference sea pressure of 0 dbar).
+        CT_ptarray-like, unitless
+
+            The derivative of Conservative Temperature with respect to potential temperature (the regular one with pr = 0 dbar) at constant SA. CT_pt is dimensionless.
+
+gsw.CT_first_derivatives_wrt_t_exact(SA, t, p)[source]
+
+    Calculates the following three derivatives of Conservative Temperature. These derivatives are done with respect to in-situ temperature t (in the case of CT_T_wrt_t) or at constant in-situ tempertature (in the cases of CT_SA_wrt_t and CT_P_wrt_t). (1) CT_SA_wrt_t, the derivative of CT with respect to Absolute Salinity at constant t and p, and (2) CT_T_wrt_t, derivative of CT with respect to in-situ temperature t at constant SA and p. (3) CT_P_wrt_t, derivative of CT with respect to pressure P (in Pa) at constant SA and t.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        CT_SA_wrt_tarray-like, K kg/g
+
+            The first derivative of Conservative Temperature with respect to Absolute Salinity at constant t and p. [ K/(g/kg)] i.e.
+        CT_T_wrt_tarray-like, unitless
+
+            The first derivative of Conservative Temperature with respect to in-situ temperature, t, at constant SA and p.
+        CT_P_wrt_tarray-like, K/Pa
+
+            The first derivative of Conservative Temperature with respect to pressure P (in Pa) at constant SA and t.
+
+gsw.CT_freezing(SA, p, saturation_fraction)[source]
+
+    Calculates the Conservative Temperature at which seawater freezes. The Conservative Temperature freezing point is calculated from the exact in-situ freezing temperature which is found by a modified Newton-Raphson iteration (McDougall and Wotherspoon, 2014) of the equality of the chemical potentials of water in seawater and in ice.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        saturation_fractionarray-like
+
+            Saturation fraction of dissolved air in seawater. (0..1)
+
+    Returns
+
+        CT_freezingarray-like, deg C
+
+            Conservative Temperature at freezing of seawater That is, the freezing temperature expressed in terms of Conservative Temperature (ITS-90).
+
+gsw.CT_freezing_first_derivatives(SA, p, saturation_fraction)[source]
+
+    Calculates the first derivatives of the Conservative Temperature at which seawater freezes, with respect to Absolute Salinity SA and pressure P (in Pa).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        saturation_fractionarray-like
+
+            Saturation fraction of dissolved air in seawater. (0..1)
+
+    Returns
+
+        CTfreezing_SAarray-like, K kg/g
+
+            the derivative of the Conservative Temperature at freezing (ITS-90) with respect to Absolute Salinity at fixed pressure [ K/(g/kg) ] i.e.
+        CTfreezing_Parray-like, K/Pa
+
+            the derivative of the Conservative Temperature at freezing (ITS-90) with respect to pressure (in Pa) at fixed Absolute Salinity
+
+gsw.CT_freezing_first_derivatives_poly(SA, p, saturation_fraction)[source]
+
+    Calculates the first derivatives of the Conservative Temperature at which seawater freezes, with respect to Absolute Salinity SA and pressure P (in Pa) of the comptationally efficient polynomial fit of the freezing temperature (McDougall et al., 2014).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        saturation_fractionarray-like
+
+            Saturation fraction of dissolved air in seawater. (0..1)
+
+    Returns
+
+        CTfreezing_SAarray-like, K kg/g
+
+            the derivative of the Conservative Temperature at freezing (ITS-90) with respect to Absolute Salinity at fixed pressure [ K/(g/kg) ] i.e.
+        CTfreezing_Parray-like, K/Pa
+
+            the derivative of the Conservative Temperature at freezing (ITS-90) with respect to pressure (in Pa) at fixed Absolute Salinity
+
+gsw.CT_freezing_poly(SA, p, saturation_fraction)[source]
+
+    Calculates the Conservative Temperature at which seawater freezes. The error of this fit ranges between -5e-4 K and 6e-4 K when compared with the Conservative Temperature calculated from the exact in-situ freezing temperature which is found by a Newton-Raphson iteration of the equality of the chemical potentials of water in seawater and in ice. Note that the Conservative Temperature freezing temperature can be found by this exact method using the function gsw_CT_freezing.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        saturation_fractionarray-like
+
+            Saturation fraction of dissolved air in seawater. (0..1)
+
+    Returns
+
+        CT_freezingarray-like, deg C
+
+            Conservative Temperature at freezing of seawater That is, the freezing temperature expressed in terms of Conservative Temperature (ITS-90).
+
+gsw.CT_from_enthalpy(SA, h, p)[source]
+
+    Calculates the Conservative Temperature of seawater, given the Absolute Salinity, specific enthalpy, h, and pressure p. The specific enthalpy input is the one calculated from the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        harray-like
+
+            Specific enthalpy, J/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        CTarray-like, deg C
+
+            Conservative Temperature ( ITS-90)
+
+gsw.CT_from_enthalpy_exact(SA, h, p)[source]
+
+    Calculates the Conservative Temperature of seawater, given the Absolute Salinity, SA, specific enthalpy, h, and pressure p. The specific enthalpy input is calculated from the full Gibbs function of seawater, gsw_enthalpy_t_exact.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        harray-like
+
+            Specific enthalpy, J/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        CTarray-like, deg C
+
+            Conservative Temperature ( ITS-90)
+
+gsw.CT_from_entropy(SA, entropy)[source]
+
+    Calculates Conservative Temperature with entropy as an input variable.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        entropyarray-like
+
+            Specific entropy, J/(kg*K)
+
+    Returns
+
+        CTarray-like, deg C
+
+            Conservative Temperature (ITS-90)
+
+gsw.CT_from_pt(SA, pt)[source]
+
+    Calculates Conservative Temperature of seawater from potential temperature (whose reference sea pressure is zero dbar).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        ptarray-like
+
+            Potential temperature referenced to a sea pressure, degrees C
+
+    Returns
+
+        CTarray-like, deg C
+
+            Conservative Temperature (ITS-90)
+
+gsw.CT_from_rho(rho, SA, p)[source]
+
+    Calculates the Conservative Temperature of a seawater sample, for given values of its density, Absolute Salinity and sea pressure (in dbar), using the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        rhoarray-like
+
+            Seawater density (not anomaly) in-situ, e.g., 1026 kg/m^3.
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        CTarray-like, deg C
+
+            Conservative Temperature (ITS-90)
+        CT_multiplearray-like, deg C
+
+            Conservative Temperature (ITS-90)
+
+gsw.CT_from_t(SA, t, p)[source]
+
+    Calculates Conservative Temperature of seawater from in-situ temperature.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        CTarray-like, deg C
+
+            Conservative Temperature (ITS-90)
+
+gsw.CT_maxdensity(SA, p)[source]
+
+    Calculates the Conservative Temperature of maximum density of seawater. This function returns the Conservative temperature at which the density of seawater is a maximum, at given Absolute Salinity, SA, and sea pressure, p (in dbar). This function uses the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        CT_maxdensityarray-like, deg C
+
+            Conservative Temperature at which the density of seawater is a maximum for given Absolute Salinity and pressure.
+
+gsw.CT_second_derivatives(SA, pt)[source]
+
+    Calculates the following three, second-order derivatives of Conservative Temperature (1) CT_SA_SA, the second derivative with respect to Absolute Salinity at constant potential temperature (with p_ref = 0 dbar), (2) CT_SA_pt, the derivative with respect to potential temperature (the regular potential temperature which is referenced to 0 dbar) and Absolute Salinity, and (3) CT_pt_pt, the second derivative with respect to potential temperature (the regular potential temperature which is referenced to 0 dbar) at constant Absolute Salinity.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        ptarray-like
+
+            Potential temperature referenced to a sea pressure, degrees C
+
+    Returns
+
+        CT_SA_SAarray-like, K/((g/kg)^2)
+
+            The second derivative of Conservative Temperature with respect to Absolute Salinity at constant potential temperature (the regular potential temperature which has reference sea pressure of 0 dbar).
+        CT_SA_ptarray-like,
+
+            The derivative of Conservative Temperature with respect to potential temperature (the regular one with
+        p_refarray-like, 1/(g/kg)
+
+            0 dbar) and Absolute Salinity.
+        CT_pt_ptarray-like,
+
+            The second derivative of Conservative Temperature with respect to potential temperature (the regular one with
+        p_refarray-like, 1/K
+
+            0 dbar) at constant SA.
+
+gsw.C_from_SP(SP, t, p)[source]
+
+    Calculates conductivity, C, from (SP,t,p) using PSS-78 in the range 2 < SP < 42. If the input Practical Salinity is less than 2 then a modified form of the Hill et al. (1986) fomula is used for Practical Salinity. The modification of the Hill et al. (1986) expression is to ensure that it is exactly consistent with PSS-78 at SP = 2.
+
+    Parameters
+
+        SParray-like
+
+            Practical Salinity (PSS-78), unitless
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        Carray-like, mS/cm
+
+            conductivity
+
+gsw.Fdelta(p, lon, lat)[source]
+
+    Calculates Fdelta from the Absolute Salinity Anomaly Ratio (SAAR). It finds SAAR by calling the function “gsw_SAAR(p,long,lat)” and then simply calculates Fdelta from
+
+    Parameters
+
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        lonarray-like
+
+            Longitude, -360 to 360 degrees
+        latarray-like
+
+            Latitude, -90 to 90 degrees
+
+    Returns
+
+        Fdeltaarray-like, unitless
+
+            ratio of SA to Sstar, minus 1
+
+gsw.Helmholtz_energy_ice(t, p)[source]
+
+    Calculates the Helmholtz energy of ice.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        Helmholtz_energy_icearray-like, J/kg
+
+            Helmholtz energy of ice
+
+gsw.Hill_ratio_at_SP2(t)[source]
+
+    Calculates the Hill ratio, which is the adjustment needed to apply for Practical Salinities smaller than 2. This ratio is defined at a Practical Salinity = 2 and in-situ temperature, t using PSS-78. The Hill ratio is the ratio of 2 to the output of the Hill et al. (1986) formula for Practical Salinity at the conductivity ratio, Rt, at which Practical Salinity on the PSS-78 scale is exactly 2.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+
+    Returns
+
+        Hill_ratioarray-like, unitless
+
+            Hill ratio at SP of 2
+
+gsw.IPV_vs_fNsquared_ratio(SA, CT, p, p_ref=0, axis=0)[source]
+
+    Calculates the ratio of the vertical gradient of potential density to the vertical gradient of locally-referenced potential density. This is also the ratio of the planetary Isopycnal Potential Vorticity (IPV) to f times N^2, hence the name for this variable, IPV_vs_fNsquared_ratio (see Eqn. (3.20.17) of IOC et al. (2010)).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        p_reffloat
+
+            Reference pressure, dbar
+
+    Returns
+
+        IPV_vs_fNsquared_ratioarray
+
+            The ratio of the vertical gradient of potential density referenced to p_ref, to the vertical gradient of locally-referenced potential density, dimensionless.
+        p_midarray
+
+            Pressure at midpoints of p, dbar. The array shape matches IPV_vs_fNsquared_ratio.
+
+gsw.Nsquared(SA, CT, p, lat=None, axis=0)[source]
+
+    Calculate the square of the buoyancy frequency.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        latarray-like, 1-D, optional
+
+            Latitude, degrees.
+        axisint, optional
+
+            The dimension along which pressure increases.
+
+    Returns
+
+        N2array
+
+            Buoyancy frequency-squared at pressure midpoints, 1/s. The shape along the pressure axis dimension is one less than that of the inputs.
+        p_midarray
+
+            Pressure at midpoints of p, dbar. The array shape matches N2.
+
+gsw.O2sol(SA, CT, p, lon, lat)[source]
+
+    Calculates the oxygen concentration expected at equilibrium with air at an Absolute Pressure of 101325 Pa (sea pressure of 0 dbar) including saturated water vapor. This function uses the solubility coefficients derived from the data of Benson and Krause (1984), as fitted by Garcia and Gordon (1992, 1993).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        lonarray-like
+
+            Longitude, -360 to 360 degrees
+        latarray-like
+
+            Latitude, -90 to 90 degrees
+
+    Returns
+
+        O2solarray-like, umol/kg
+
+            solubility of oxygen in micro-moles per kg
+
+gsw.O2sol_SP_pt(SP, pt)[source]
+
+    Calculates the oxygen concentration expected at equilibrium with air at an Absolute Pressure of 101325 Pa (sea pressure of 0 dbar) including saturated water vapor. This function uses the solubility coefficients derived from the data of Benson and Krause (1984), as fitted by Garcia and Gordon (1992, 1993).
+
+    Parameters
+
+        SParray-like
+
+            Practical Salinity (PSS-78), unitless
+        ptarray-like
+
+            Potential temperature referenced to a sea pressure, degrees C
+
+    Returns
+
+        O2solarray-like, umol/kg
+
+            solubility of oxygen in micro-moles per kg
+
+gsw.SAAR(p, lon, lat)[source]
+
+    Calculates the Absolute Salinity Anomaly Ratio, SAAR, in the open ocean by spatially interpolating the global reference data set of SAAR to the location of the seawater sample.
+
+    Parameters
+
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        lonarray-like
+
+            Longitude, -360 to 360 degrees
+        latarray-like
+
+            Latitude, -90 to 90 degrees
+
+    Returns
+
+        SAARarray-like, unitless
+
+            Absolute Salinity Anomaly Ratio
+
+gsw.SA_freezing_from_CT(CT, p, saturation_fraction)[source]
+
+    Calculates the Absolute Salinity of seawater at the freezing temperature. That is, the output is the Absolute Salinity of seawater, with Conservative Temperature CT, pressure p and the fraction saturation_fraction of dissolved air, that is in equilibrium with ice at the same in situ temperature and pressure. If the input values are such that there is no positive value of Absolute Salinity for which seawater is frozen, the output, SA_freezing, is made a NaN.
+
+    Parameters
+
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        saturation_fractionarray-like
+
+            Saturation fraction of dissolved air in seawater. (0..1)
+
+    Returns
+
+        SA_freezingarray-like, g/kg
+
+            Absolute Salinity of seawater when it freezes, for given input values of its Conservative Temperature, pressure and air saturation fraction.
+
+gsw.SA_freezing_from_CT_poly(CT, p, saturation_fraction)[source]
+
+    Calculates the Absolute Salinity of seawater at the freezing temperature. That is, the output is the Absolute Salinity of seawater, with the fraction saturation_fraction of dissolved air, that is in equilibrium with ice at Conservative Temperature CT and pressure p. If the input values are such that there is no positive value of Absolute Salinity for which seawater is frozen, the output, SA_freezing, is put equal to NaN.
+
+    Parameters
+
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        saturation_fractionarray-like
+
+            Saturation fraction of dissolved air in seawater. (0..1)
+
+    Returns
+
+        SA_freezingarray-like, g/kg
+
+            Absolute Salinity of seawater when it freezes, for given input values of Conservative Temperature pressure and air saturation fraction.
+
+gsw.SA_freezing_from_t(t, p, saturation_fraction)[source]
+
+    Calculates the Absolute Salinity of seawater at the freezing temperature. That is, the output is the Absolute Salinity of seawater, with the fraction saturation_fraction of dissolved air, that is in equilibrium with ice at in-situ temperature t and pressure p. If the input values are such that there is no positive value of Absolute Salinity for which seawater is frozen, the output, SA_freezing, is set to NaN.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        saturation_fractionarray-like
+
+            Saturation fraction of dissolved air in seawater. (0..1)
+
+    Returns
+
+        SA_freezingarray-like, g/kg
+
+            Absolute Salinity of seawater when it freezes, for given input values of in situ temperature, pressure and air saturation fraction.
+
+gsw.SA_freezing_from_t_poly(t, p, saturation_fraction)[source]
+
+    Calculates the Absolute Salinity of seawater at the freezing temperature. That is, the output is the Absolute Salinity of seawater, with the fraction saturation_fraction of dissolved air, that is in equilibrium with ice at in-situ temperature t and pressure p. If the input values are such that there is no positive value of Absolute Salinity for which seawater is frozen, the output, SA_freezing, is put equal to NaN.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        saturation_fractionarray-like
+
+            Saturation fraction of dissolved air in seawater. (0..1)
+
+    Returns
+
+        SA_freezingarray-like, g/kg
+
+            Absolute Salinity of seawater when it freezes, for given input values of in situ temperature, pressure and air saturation fraction.
+
+gsw.SA_from_SP(SP, p, lon, lat)[source]
+
+    Calculates Absolute Salinity from Practical Salinity. Since SP is non-negative by definition, this function changes any negative input values of SP to be zero.
+
+    Parameters
+
+        SParray-like
+
+            Practical Salinity (PSS-78), unitless
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        lonarray-like
+
+            Longitude, -360 to 360 degrees
+        latarray-like
+
+            Latitude, -90 to 90 degrees
+
+    Returns
+
+        SAarray-like, g/kg
+
+            Absolute Salinity
+
+gsw.SA_from_SP_Baltic(SP, lon, lat)[source]
+
+    Calculates Absolute Salinity in the Baltic Sea, from Practical Salinity. Since SP is non-negative by definition, this function changes any negative input values of SP to be zero. Note. This programme will only produce Absolute Salinity values for the Baltic Sea.
+
+    Parameters
+
+        SParray-like
+
+            Practical Salinity (PSS-78), unitless
+        lonarray-like
+
+            Longitude, -360 to 360 degrees
+        latarray-like
+
+            Latitude, -90 to 90 degrees
+
+    Returns
+
+        SA_balticarray-like, g kg^-1
+
+            Absolute Salinity in the Baltic Sea
+
+gsw.SA_from_Sstar(Sstar, p, lon, lat)[source]
+
+    Calculates Absolute Salinity from Preformed Salinity.
+
+    Parameters
+
+        Sstararray-like
+
+            Preformed Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        lonarray-like
+
+            Longitude, -360 to 360 degrees
+        latarray-like
+
+            Latitude, -90 to 90 degrees
+
+    Returns
+
+        SAarray-like, g/kg
+
+            Absolute Salinity
+
+gsw.SA_from_rho(rho, CT, p)[source]
+
+    Calculates the Absolute Salinity of a seawater sample, for given values of its density, Conservative Temperature and sea pressure (in dbar). This function uses the computationally-efficient 75-term expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        rhoarray-like
+
+            Seawater density (not anomaly) in-situ, e.g., 1026 kg/m^3.
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        SAarray-like, g/kg
+
+            Absolute Salinity.
+
+gsw.SP_from_C(C, t, p)[source]
+
+    Calculates Practical Salinity, SP, from conductivity, C, primarily using the PSS-78 algorithm. Note that the PSS-78 algorithm for Practical Salinity is only valid in the range 2 < SP < 42. If the PSS-78 algorithm produces a Practical Salinity that is less than 2 then the Practical Salinity is recalculated with a modified form of the Hill et al. (1986) formula. The modification of the Hill et al. (1986) expression is to ensure that it is exactly consistent with PSS-78 at SP = 2. Note that the input values of conductivity need to be in units of mS/cm (not S/m).
+
+    Parameters
+
+        Carray-like
+
+            Conductivity, mS/cm
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        SParray-like, unitless
+
+            Practical Salinity on the PSS-78 scale
+
+gsw.SP_from_SA(SA, p, lon, lat)[source]
+
+    Calculates Practical Salinity from Absolute Salinity.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        lonarray-like
+
+            Longitude, -360 to 360 degrees
+        latarray-like
+
+            Latitude, -90 to 90 degrees
+
+    Returns
+
+        SParray-like, unitless
+
+            Practical Salinity (PSS-78)
+
+gsw.SP_from_SA_Baltic(SA, lon, lat)[source]
+
+    Calculates Practical Salinity for the Baltic Sea, from a value computed analytically from Absolute Salinity. Note. This programme will only produce Practical Salinty values for the Baltic Sea.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        lonarray-like
+
+            Longitude, -360 to 360 degrees
+        latarray-like
+
+            Latitude, -90 to 90 degrees
+
+    Returns
+
+        SP_balticarray-like, unitless
+
+            Practical Salinity
+
+gsw.SP_from_SK(SK)[source]
+
+    Calculates Practical Salinity from Knudsen Salinity.
+
+    Parameters
+
+        SKarray-like
+
+            Knudsen Salinity, ppt
+
+    Returns
+
+        SParray-like, unitless
+
+            Practical Salinity (PSS-78)
+
+gsw.SP_from_SR(SR)[source]
+
+    Calculates Practical Salinity from Reference Salinity.
+
+    Parameters
+
+        SRarray-like
+
+            Reference Salinity, g/kg
+
+    Returns
+
+        SParray-like, unitless
+
+            Practical Salinity (PSS-78)
+
+gsw.SP_from_Sstar(Sstar, p, lon, lat)[source]
+
+    Calculates Practical Salinity from Preformed Salinity.
+
+    Parameters
+
+        Sstararray-like
+
+            Preformed Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        lonarray-like
+
+            Longitude, -360 to 360 degrees
+        latarray-like
+
+            Latitude, -90 to 90 degrees
+
+    Returns
+
+        SParray-like, unitless
+
+            Practical Salinity (PSS-78)
+
+gsw.SP_salinometer(Rt, t)[source]
+
+    Calculates Practical Salinity SP from a salinometer, primarily using the PSS-78 algorithm. Note that the PSS-78 algorithm for Practical Salinity is only valid in the range 2 < SP < 42. If the PSS-78 algorithm produces a Practical Salinity that is less than 2 then the Practical Salinity is recalculated with a modified form of the Hill et al. (1986) formula. The modification of the Hill et al. (1986) expression is to ensure that it is exactly consistent with PSS-78 at SP = 2.
+
+    Parameters
+
+        Rtarray-like
+
+            C(SP,t_68,0)/C(SP=35,t_68,0), unitless
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+
+    Returns
+
+        SParray-like, unitless
+
+            Practical Salinity on the PSS-78 scale t may have dimensions 1x1 or Mx1 or 1xN or MxN, where Rt is MxN.
+
+gsw.SR_from_SP(SP)[source]
+
+    Calculates Reference Salinity from Practical Salinity.
+
+    Parameters
+
+        SParray-like
+
+            Practical Salinity (PSS-78), unitless
+
+    Returns
+
+        SRarray-like, g/kg
+
+            Reference Salinity
+
+gsw.Sstar_from_SA(SA, p, lon, lat)[source]
+
+    Converts Preformed Salinity from Absolute Salinity.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        lonarray-like
+
+            Longitude, -360 to 360 degrees
+        latarray-like
+
+            Latitude, -90 to 90 degrees
+
+    Returns
+
+        Sstararray-like, g/kg
+
+            Preformed Salinity
+
+gsw.Sstar_from_SP(SP, p, lon, lat)[source]
+
+    Calculates Preformed Salinity from Absolute Salinity. Since SP is non-negative by definition, this function changes any negative input values of SP to be zero.
+
+    Parameters
+
+        SParray-like
+
+            Practical Salinity (PSS-78), unitless
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        lonarray-like
+
+            Longitude, -360 to 360 degrees
+        latarray-like
+
+            Latitude, -90 to 90 degrees
+
+    Returns
+
+        Sstararray-like, g/kg
+
+            Preformed Salinity
+
+gsw.Turner_Rsubrho(SA, CT, p, axis=0)[source]
+
+    Calculate the Turner Angle and the Stability Ratio.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        axisint, optional
+
+            The dimension along which pressure increases.
+
+    Returns
+
+        Tuarray
+
+            Turner Angle at pressure midpoints, degrees. The shape along the pressure axis dimension is one less than that of the inputs.
+        Rsubrhoarray
+
+            Stability Ratio, dimensionless. The shape matches Tu.
+        p_midarray
+
+            Pressure at midpoints of p, dbar. The array shape matches Tu.
+
+gsw.adiabatic_lapse_rate_from_CT(SA, CT, p)[source]
+
+    Calculates the adiabatic lapse rate of sea water from Conservative Temperature.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        adiabatic_lapse_ratearray-like, K/Pa
+
+            adiabatic lapse rate
+
+gsw.adiabatic_lapse_rate_ice(t, p)[source]
+
+    Calculates the adiabatic lapse rate of ice.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        adiabatic_lapse_rate_icearray-like, K/Pa
+
+            adiabatic lapse rate
+
+gsw.alpha(SA, CT, p)[source]
+
+    Calculates the thermal expansion coefficient of seawater with respect to Conservative Temperature using the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        alphaarray-like, 1/K
+
+            thermal expansion coefficient with respect to Conservative Temperature
+
+gsw.alpha_on_beta(SA, CT, p)[source]
+
+    Calculates alpha divided by beta, where alpha is the thermal expansion coefficient and beta is the saline contraction coefficient of seawater from Absolute Salinity and Conservative Temperature. This function uses the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        alpha_on_betaarray-like, kg g^-1 K^-1
+
+            thermal expansion coefficient with respect to Conservative Temperature divided by the saline contraction coefficient at constant Conservative Temperature
+
+gsw.alpha_wrt_t_exact(SA, t, p)[source]
+
+    Calculates the thermal expansion coefficient of seawater with respect to in-situ temperature.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        alpha_wrt_t_exactarray-like, 1/K
+
+            thermal expansion coefficient with respect to in-situ temperature
+
+gsw.alpha_wrt_t_ice(t, p)[source]
+
+    Calculates the thermal expansion coefficient of ice with respect to in-situ temperature.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        alpha_wrt_t_icearray-like, 1/K
+
+            thermal expansion coefficient of ice with respect to in-situ temperature
+
+gsw.beta(SA, CT, p)[source]
+
+    Calculates the saline (i.e. haline) contraction coefficient of seawater at constant Conservative Temperature using the computationally-efficient 75-term expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        betaarray-like, kg/g
+
+            saline contraction coefficient at constant Conservative Temperature
+
+gsw.beta_const_t_exact(SA, t, p)[source]
+
+    Calculates the saline (i.e. haline) contraction coefficient of seawater at constant in-situ temperature.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        beta_const_t_exactarray-like, kg/g
+
+            saline contraction coefficient at constant in-situ temperature
+
+gsw.cabbeling(SA, CT, p)[source]
+
+    Calculates the cabbeling coefficient of seawater with respect to Conservative Temperature. This function uses the computationally- efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        cabbelingarray-like, 1/K^2
+
+            cabbeling coefficient with respect to Conservative Temperature.
+
+gsw.chem_potential_water_ice(t, p)[source]
+
+    Calculates the chemical potential of water in ice from in-situ temperature and pressure.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        chem_potential_water_icearray-like, J/kg
+
+            chemical potential of ice
+
+gsw.chem_potential_water_t_exact(SA, t, p)[source]
+
+    Calculates the chemical potential of water in seawater.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        chem_potential_water_t_exactarray-like, J/g
+
+            chemical potential of water in seawater
+
+gsw.cp_ice(t, p)[source]
+
+    Calculates the isobaric heat capacity of seawater.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        cp_icearray-like, J kg^-1 K^-1
+
+            heat capacity of ice
+
+gsw.cp_t_exact(SA, t, p)[source]
+
+    Calculates the isobaric heat capacity of seawater.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        cp_t_exactarray-like, J/(kg*K)
+
+            heat capacity of seawater
+
+gsw.deltaSA_atlas(p, lon, lat)[source]
+
+    Calculates the Absolute Salinity Anomaly atlas value, SA - SR, in the open ocean by spatially interpolating the global reference data set of deltaSA_atlas to the location of the seawater sample.
+
+    Parameters
+
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        lonarray-like
+
+            Longitude, -360 to 360 degrees
+        latarray-like
+
+            Latitude, -90 to 90 degrees
+
+    Returns
+
+        deltaSA_atlasarray-like, g/kg
+
+            Absolute Salinity Anomaly atlas value
+
+gsw.deltaSA_from_SP(SP, p, lon, lat)[source]
+
+    Calculates Absolute Salinity Anomaly from Practical Salinity. Since SP is non-negative by definition, this function changes any negative input values of SP to be zero.
+
+    Parameters
+
+        SParray-like
+
+            Practical Salinity (PSS-78), unitless
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        lonarray-like
+
+            Longitude, -360 to 360 degrees
+        latarray-like
+
+            Latitude, -90 to 90 degrees
+
+    Returns
+
+        deltaSAarray-like, g/kg
+
+            Absolute Salinity Anomaly
+
+gsw.dilution_coefficient_t_exact(SA, t, p)[source]
+
+    Calculates the dilution coefficient of seawater. The dilution coefficient of seawater is defined as the Absolute Salinity times the second derivative of the Gibbs function with respect to Absolute Salinity, that is, SA.*g_SA_SA.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        dilution_coefficient_t_exactarray-like, (J/kg)(kg/g)
+
+            dilution coefficient
+
+gsw.distance(lon, lat, p=0, axis=-1)[source]
+
+    Great-circle distance in m between lon, lat points.
+
+    Parameters
+
+        lon, latarray-like, 1-D or 2-D (shapes must match)
+
+            Longitude, latitude, in degrees.
+        parray-like, scalar, 1-D or 2-D, optional, default is 0
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        axisint, -1, 0, 1, optional
+
+            The axis or dimension along which lat and lon vary. This differs from most functions, for which axis is the dimension along which p increases.
+
+    Returns
+
+        distance1-D or 2-D array
+
+            distance in meters between adjacent points.
+
+gsw.dynamic_enthalpy(SA, CT, p)[source]
+
+    Calculates dynamic enthalpy of seawater using the computationally- efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015). Dynamic enthalpy is defined as enthalpy minus potential enthalpy (Young, 2010).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        dynamic_enthalpyarray-like, J/kg
+
+            dynamic enthalpy
+
+gsw.enthalpy(SA, CT, p)[source]
+
+    Calculates specific enthalpy of seawater using the computationally- efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        enthalpyarray-like, J/kg
+
+            specific enthalpy
+
+gsw.enthalpy_CT_exact(SA, CT, p)[source]
+
+    Calculates specific enthalpy of seawater from Absolute Salinity and Conservative Temperature and pressure.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        enthalpy_CT_exactarray-like, J/kg
+
+            specific enthalpy
+
+gsw.enthalpy_diff(SA, CT, p_shallow, p_deep)[source]
+
+    Calculates the difference of the specific enthalpy of seawater between two different pressures, p_deep (the deeper pressure) and p_shallow (the shallower pressure), at the same values of SA and CT. This function uses the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015). The output (enthalpy_diff) is the specific enthalpy evaluated at (SA,CT,p_deep) minus the specific enthalpy at (SA,CT,p_shallow).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        p_shallowarray-like
+
+            Upper sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        p_deeparray-like
+
+            Lower sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        enthalpy_diffarray-like, J/kg
+
+            difference of specific enthalpy (deep minus shallow)
+
+gsw.enthalpy_first_derivatives(SA, CT, p)[source]
+
+    Calculates the following two derivatives of specific enthalpy (h) of seawater using the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015). (1) h_SA, the derivative with respect to Absolute Salinity at constant CT and p, and (2) h_CT, derivative with respect to CT at constant SA and p. Note that h_P is specific volume (1/rho) it can be caclulated by calling gsw_specvol(SA,CT,p).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        h_SAarray-like, J/g
+
+            The first derivative of specific enthalpy with respect to Absolute Salinity at constant CT and p. [ J/(kg (g/kg))] i.e.
+        h_CTarray-like, J/(kg K)
+
+            The first derivative of specific enthalpy with respect to CT at constant SA and p.
+
+gsw.enthalpy_first_derivatives_CT_exact(SA, CT, p)[source]
+
+    Calculates the following two derivatives of specific enthalpy, h, (1) h_SA, the derivative with respect to Absolute Salinity at constant CT and p, and (2) h_CT, derivative with respect to CT at constant SA and p. Note that h_P is specific volume, v, it can be calulated by calling gsw_specvol_CT_exact(SA,CT,p).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        h_SAarray-like, J/g
+
+            The first derivative of specific enthalpy with respect to Absolute Salinity at constant CT and p. [ J/(kg (g/kg))] i.e.
+        h_CTarray-like, J/(kg K)
+
+            The first derivative of specific enthalpy with respect to CT at constant SA and p.
+
+gsw.enthalpy_ice(t, p)[source]
+
+    Calculates the specific enthalpy of ice (h_Ih).
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        enthalpy_icearray-like, J/kg
+
+            specific enthalpy of ice
+
+gsw.enthalpy_second_derivatives(SA, CT, p)[source]
+
+    Calculates the following three second-order derivatives of specific enthalpy (h),using the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015). (1) h_SA_SA, second-order derivative with respect to Absolute Salinity at constant CT & p. (2) h_SA_CT, second-order derivative with respect to SA & CT at constant p. (3) h_CT_CT, second-order derivative with respect to CT at constant SA and p.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        h_SA_SAarray-like, J/(kg (g/kg)^2)
+
+            The second derivative of specific enthalpy with respect to Absolute Salinity at constant CT & p.
+        h_SA_CTarray-like, J/(kg K(g/kg))
+
+            The second derivative of specific enthalpy with respect to SA and CT at constant p.
+        h_CT_CTarray-like, J/(kg K^2)
+
+            The second derivative of specific enthalpy with respect to CT at constant SA and p.
+
+gsw.enthalpy_second_derivatives_CT_exact(SA, CT, p)[source]
+
+    Calculates the following three second-order derivatives of specific enthalpy (h), (1) h_SA_SA, second-order derivative with respect to Absolute Salinity at constant CT & p. (2) h_SA_CT, second-order derivative with respect to SA & CT at constant p. (3) h_CT_CT, second-order derivative with respect to CT at constant SA and p.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        h_SA_SAarray-like, J/(kg (g/kg)^2)
+
+            The second derivative of specific enthalpy with respect to Absolute Salinity at constant CT & p.
+        h_SA_CTarray-like, J/(kg K(g/kg))
+
+            The second derivative of specific enthalpy with respect to SA and CT at constant p.
+        h_CT_CTarray-like, J/(kg K^2)
+
+            The second derivative of specific enthalpy with respect to CT at constant SA and p.
+
+gsw.enthalpy_t_exact(SA, t, p)[source]
+
+    Calculates the specific enthalpy of seawater.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        enthalpy_t_exactarray-like, J/kg
+
+            specific enthalpy
+
+gsw.entropy_first_derivatives(SA, CT)[source]
+
+    Calculates the following two partial derivatives of specific entropy (eta) (1) eta_SA, the derivative with respect to Absolute Salinity at constant Conservative Temperature, and (2) eta_CT, the derivative with respect to Conservative Temperature at constant Absolute Salinity.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+
+    Returns
+
+        eta_SAarray-like, J/(g K)
+
+            The derivative of specific entropy with respect to Absolute Salinity (in units of g kg^-1) at constant Conservative Temperature.
+        eta_CTarray-like, J/(kg K^2)
+
+            The derivative of specific entropy with respect to Conservative Temperature at constant Absolute Salinity.
+
+gsw.entropy_from_CT(SA, CT)[source]
+
+    Calculates specific entropy of seawater from Conservative Temperature.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+
+    Returns
+
+        entropyarray-like, J/(kg*K)
+
+            specific entropy
+
+gsw.entropy_from_pt(SA, pt)[source]
+
+    Calculates specific entropy of seawater as a function of potential temperature.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        ptarray-like
+
+            Potential temperature referenced to a sea pressure, degrees C
+
+    Returns
+
+        entropyarray-like, J/(kg*K)
+
+            specific entropy
+
+gsw.entropy_from_t(SA, t, p)[source]
+
+    Calculates specific entropy of seawater from in-situ temperature.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        entropyarray-like, J/(kg*K)
+
+            specific entropy
+
+gsw.entropy_ice(t, p)[source]
+
+    Calculates specific entropy of ice.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        ice_entropyarray-like, J kg^-1 K^-1
+
+            specific entropy of ice
+
+gsw.entropy_second_derivatives(SA, CT)[source]
+
+    Calculates the following three second-order partial derivatives of specific entropy (eta) (1) eta_SA_SA, the second derivative with respect to Absolute Salinity at constant Conservative Temperature, and (2) eta_SA_CT, the derivative with respect to Absolute Salinity and Conservative Temperature. (3) eta_CT_CT, the second derivative with respect to Conservative Temperature at constant Absolute Salinity.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+
+    Returns
+
+        eta_SA_SAarray-like, J/(kg K(g/kg)^2)
+
+            The second derivative of specific entropy with respect to Absolute Salinity (in units of g kg^-1) at constant Conservative Temperature.
+        eta_SA_CTarray-like, J/(kg (g/kg) K^2)
+
+            The second derivative of specific entropy with respect to Conservative Temperature at constant Absolute
+        eta_CT_CTarray-like, J/(kg K^3)
+
+            The second derivative of specific entropy with respect to Conservative Temperature at constant Absolute
+
+gsw.f(lat)[source]
+
+    Coriolis parameter in 1/s for latitude in degrees.
+
+gsw.frazil_properties(SA_bulk, h_bulk, p)[source]
+
+    Calculates the mass fraction of ice (mass of ice divided by mass of ice plus seawater), w_Ih_final, which results from given values of the bulk Absolute Salinity, SA_bulk, bulk enthalpy, h_bulk, occuring at pressure p. The final values of Absolute Salinity, SA_final, and Conservative Temperature, CT_final, of the interstitial seawater phase are also returned. This code assumes that there is no dissolved air in the seawater (that is, saturation_fraction is assumed to be zero throughout the code).
+
+    Parameters
+
+        SA_bulkarray-like
+
+            bulk Absolute Salinity of the seawater and ice mixture, g/kg
+        h_bulkarray-like
+
+            bulk enthalpy of the seawater and ice mixture, J/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        SA_finalarray-like, g/kg
+
+            Absolute Salinity of the seawater in the final state, whether or not any ice is present.
+        CT_finalarray-like, deg C
+
+            Conservative Temperature of the seawater in the the final state, whether or not any ice is present.
+        w_Ih_finalarray-like, unitless
+
+            mass fraction of ice in the final seawater-ice mixture. If this ice mass fraction is positive, the system is at thermodynamic equilibrium. If this ice mass fraction is zero there is no ice in the final state which consists only of seawater which is warmer than the freezing temperature.
+
+gsw.frazil_properties_potential(SA_bulk, h_pot_bulk, p)[source]
+
+    Calculates the mass fraction of ice (mass of ice divided by mass of ice plus seawater), w_Ih_eq, which results from given values of the bulk Absolute Salinity, SA_bulk, bulk potential enthalpy, h_pot_bulk, occuring at pressure p. The final equilibrium values of Absolute Salinity, SA_eq, and Conservative Temperature, CT_eq, of the interstitial seawater phase are also returned. This code assumes that there is no dissolved air in the seawater (that is, saturation_fraction is assumed to be zero thoughout the code).
+
+    Parameters
+
+        SA_bulkarray-like
+
+            bulk Absolute Salinity of the seawater and ice mixture, g/kg
+        h_pot_bulkarray-like
+
+            bulk enthalpy of the seawater and ice mixture, J/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        SA_finalarray-like, g/kg
+
+            Absolute Salinity of the seawater in the final state, whether or not any ice is present.
+        CT_finalarray-like, deg C
+
+            Conservative Temperature of the seawater in the the final state, whether or not any ice is present.
+        w_Ih_finalarray-like, unitless
+
+            mass fraction of ice in the final seawater-ice mixture. If this ice mass fraction is positive, the system is at thermodynamic equilibrium. If this ice mass fraction is zero there is no ice in the final state which consists only of seawater which is warmer than the freezing temperature.
+
+gsw.frazil_properties_potential_poly(SA_bulk, h_pot_bulk, p)[source]
+
+    Calculates the mass fraction of ice (mass of ice divided by mass of ice plus seawater), w_Ih_eq, which results from given values of the bulk Absolute Salinity, SA_bulk, bulk potential enthalpy, h_pot_bulk, occuring at pressure p. The final equilibrium values of Absolute Salinity, SA_eq, and Conservative Temperature, CT_eq, of the interstitial seawater phase are also returned. This code assumes that there is no dissolved air in the seawater (that is, saturation_fraction is assumed to be zero thoughout the code).
+
+    Parameters
+
+        SA_bulkarray-like
+
+            bulk Absolute Salinity of the seawater and ice mixture, g/kg
+        h_pot_bulkarray-like
+
+            bulk enthalpy of the seawater and ice mixture, J/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        SA_finalarray-like, g/kg
+
+            Absolute Salinity of the seawater in the final state, whether or not any ice is present.
+        CT_finalarray-like, deg C
+
+            Conservative Temperature of the seawater in the the final state, whether or not any ice is present.
+        w_Ih_finalarray-like, unitless
+
+            mass fraction of ice in the final seawater-ice mixture. If this ice mass fraction is positive, the system is at thermodynamic equilibrium. If this ice mass fraction is zero there is no ice in the final state which consists only of seawater which is warmer than the freezing temperature.
+
+gsw.frazil_ratios_adiabatic(SA, p, w_Ih)[source]
+
+    Calculates the ratios of SA, CT and P changes when frazil ice forms or melts in response to an adiabatic change in pressure of a mixture of seawater and frazil ice crystals.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        w_Iharray-like
+
+            mass fraction of ice: the mass of ice divided by the sum of the masses of ice and seawater. 0 <= wIh <= 1. unitless.
+
+    Returns
+
+        dSA_dCT_frazilarray-like, g/(kg K)
+
+            the ratio of the changes in Absolute Salinity to that of Conservative Temperature
+        dSA_dP_frazilarray-like, g/(kg Pa)
+
+            the ratio of the changes in Absolute Salinity to that of pressure (in Pa)
+        dCT_dP_frazilarray-like, K/Pa
+
+            the ratio of the changes in Conservative Temperature to that of pressure (in Pa)
+
+gsw.frazil_ratios_adiabatic_poly(SA, p, w_Ih)[source]
+
+    Calculates the ratios of SA, CT and P changes when frazil ice forms or melts in response to an adiabatic change in pressure of a mixture of seawater and frazil ice crystals.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        w_Iharray-like
+
+            mass fraction of ice: the mass of ice divided by the sum of the masses of ice and seawater. 0 <= wIh <= 1. unitless.
+
+    Returns
+
+        dSA_dCT_frazilarray-like, g/(kg K)
+
+            the ratio of the changes in Absolute Salinity to that of Conservative Temperature
+        dSA_dP_frazilarray-like, g/(kg Pa)
+
+            the ratio of the changes in Absolute Salinity to that of pressure (in Pa)
+        dCT_dP_frazilarray-like, K/Pa
+
+            the ratio of the changes in Conservative Temperature to that of pressure (in Pa)
+
+gsw.geo_strf_dyn_height(SA, CT, p, p_ref=0, axis=0, max_dp=1.0, interp_method='pchip')[source]
+
+    Dynamic height anomaly as a function of pressure.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        p_reffloat or array-like, optional
+
+            Reference pressure, dbar
+        axisint, optional, default is 0
+
+            The index of the pressure dimension in SA and CT.
+        max_dpfloat
+
+            If any pressure interval in the input p exceeds max_dp, the dynamic height will be calculated after interpolating to a grid with this spacing.
+        interp_methodstring {‘pchip’, ‘linear’}
+
+            Interpolation algorithm.
+
+    Returns
+
+        dynamic_heightarray
+
+            This is the integral of specific volume anomaly with respect to pressure, from each pressure in p to the specified reference pressure. It is the geostrophic streamfunction in an isobaric surface, relative to the reference surface.
+
+gsw.geostrophic_velocity(geo_strf, lon, lat, p=0, axis=0)[source]
+
+    Calculate geostrophic velocity from a streamfunction.
+
+    Calculates geostrophic velocity relative to a reference pressure, given a geostrophic streamfunction and the position of each station in sequence along an ocean section. The data can be from a single isobaric or “density” surface, or from a series of such surfaces.
+
+    Parameters
+
+        geo_strfarray-like, 1-D or 2-D
+
+            geostrophic streamfunction; see Notes below.
+        lonarray-like, 1-D
+
+            Longitude, -360 to 360 degrees
+        latarray-like, 1-D
+
+            Latitude, degrees
+        pfloat or array-like, optional
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar. This used only for a tiny correction in the distance calculation; it is safe to omit it.
+        axisint, 0 or 1, optional
+
+            The axis or dimension along which pressure increases in geo_strf. If geo_strf is 1-D, it is ignored.
+
+    Returns
+
+        velocityarray, 2-D or 1-D
+
+            Geostrophic velocity in m/s relative to the sea surface, averaged between each successive pair of positions.
+        mid_lon, mid_latarray, 1-D
+
+            Midpoints of input lon and lat.
+
+    Notes
+
+    The geostrophic streamfunction can be:
+
+        geo_strf_dyn_height (in an isobaric surface)
+
+        geo_strf_Montgomery (in a specific volume anomaly surface)
+
+        geo_strf_Cunninhgam (in an approximately neutral surface such as a potential density surface).
+
+        geo_strf_isopycnal (in an approximately neutral surface such as a potential density surface, a Neutral Density surface, or an omega surface (Klocker et al., 2009)).
+
+    Only geo_strf_dyn_height() is presently implemented in GSW-Python.
+
+gsw.gibbs_ice_part_t(t, p)[source]
+
+    part of the the first temperature derivative of Gibbs energy of ice that is the outout is gibbs_ice(1,0,t,p) + S0
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        gibbs_ice_part_tarray-like, J kg^-1 K^-1
+
+            part of temperature derivative
+
+gsw.gibbs_ice_pt0(pt0)[source]
+
+    part of the the first temperature derivative of Gibbs energy of ice that is the outout is “gibbs_ice(1,0,pt0,0) + s0”
+
+    Parameters
+
+        pt0array-like
+
+            Potential temperature with reference pressure of 0 dbar, degrees C
+
+    Returns
+
+        gibbs_ice_part_pt0array-like, J kg^-1 K^-1
+
+            part of temperature derivative
+
+gsw.gibbs_ice_pt0_pt0(pt0)[source]
+
+    The second temperature derivative of Gibbs energy of ice at the potential temperature with reference sea pressure of zero dbar. That is the output is gibbs_ice(2,0,pt0,0).
+
+    Parameters
+
+        pt0array-like
+
+            Potential temperature with reference pressure of 0 dbar, degrees C
+
+    Returns
+
+        gibbs_ice_pt0_pt0array-like, J kg^-1 K^-2
+
+            temperature second derivative at pt0
+
+gsw.grav(lat, p)[source]
+
+    Calculates acceleration due to gravity as a function of latitude and as a function of pressure in the ocean.
+
+    Parameters
+
+        latarray-like
+
+            Latitude, -90 to 90 degrees
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        gravarray-like, m s^-2
+
+            gravitational acceleration
+
+gsw.ice_fraction_to_freeze_seawater(SA, CT, p, t_Ih)[source]
+
+    Calculates the mass fraction of ice (mass of ice divided by mass of ice plus seawater), which, when melted into seawater having (SA,CT,p) causes the final dilute seawater to be at the freezing temperature. The other outputs are the Absolute Salinity and Conservative Temperature of the final diluted seawater.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        t_Iharray-like
+
+            In-situ temperature of ice (ITS-90), degrees C
+
+    Returns
+
+        SA_freezearray-like, g/kg
+
+            Absolute Salinity of seawater after the mass fraction of ice, ice_fraction, at temperature t_Ih has melted into the original seawater, and the final mixture is at the freezing temperature of seawater.
+        CT_freezearray-like, deg C
+
+            Conservative Temperature of seawater after the mass fraction, w_Ih, of ice at temperature t_Ih has melted into the original seawater, and the final mixture is at the freezing temperature of seawater.
+        w_Iharray-like, unitless
+
+            mass fraction of ice, having in-situ temperature t_Ih, which, when melted into seawater at (SA,CT,p) leads to the final diluted seawater being at the freezing temperature. This output must be between 0 and 1.
+
+gsw.indexer(shape, axis, order='C')[source]
+
+    Generator of indexing tuples for “apply_along_axis” usage.
+
+    The generator cycles through all axes other than axis. The numpy np.apply_along_axis function only works with functions of a single array; this generator allows us work with a function of more than one array.
+
+gsw.internal_energy(SA, CT, p)[source]
+
+    Calculates specific internal energy of seawater using the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        internal_energyarray-like, J/kg
+
+            specific internal energy
+
+gsw.internal_energy_ice(t, p)[source]
+
+    Calculates the specific internal energy of ice.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        internal_energy_icearray-like, J/kg
+
+            specific internal energy (u)
+
+gsw.kappa(SA, CT, p)[source]
+
+    Calculates the isentropic compressibility of seawater. This function has inputs of Absolute Salinity and Conservative Temperature. This function uses the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        kappaarray-like, 1/Pa
+
+            isentropic compressibility of seawater
+
+gsw.kappa_const_t_ice(t, p)[source]
+
+    Calculates isothermal compressibility of ice. Note. This is the compressibility of ice AT CONSTANT IN-SITU TEMPERATURE
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        kappa_const_t_icearray-like, 1/Pa
+
+            isothermal compressibility
+
+gsw.kappa_ice(t, p)[source]
+
+    Calculates the isentropic compressibility of ice.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        kappa_icearray-like, 1/Pa
+
+            isentropic compressibility
+
+gsw.kappa_t_exact(SA, t, p)[source]
+
+    Calculates the isentropic compressibility of seawater.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        kappa_t_exactarray-like, 1/Pa
+
+            isentropic compressibility
+
+gsw.latentheat_evap_CT(SA, CT)[source]
+
+    Calculates latent heat, or enthalpy, of evaporation at p = 0 (the surface). It is defined as a function of Absolute Salinity, SA, and Conservative Temperature, CT, and is valid in the ranges 0 < SA < 42 g/kg and 0 < CT < 40 deg C. The errors range between -0.4 and 0.6 J/kg.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+
+    Returns
+
+        latentheat_evaparray-like, J/kg
+
+            latent heat of evaporation
+
+gsw.latentheat_evap_t(SA, t)[source]
+
+    Calculates latent heat, or enthalpy, of evaporation at p = 0 (the surface). It is defined as a function of Absolute Salinity, SA, and in-situ temperature, t, and is valid in the ranges 0 < SA < 40 g/kg and 0 < CT < 42 deg C. The errors range between -0.4 and 0.6 J/kg.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+
+    Returns
+
+        latentheat_evaparray-like, J/kg
+
+            latent heat of evaporation
+
+gsw.latentheat_melting(SA, p)[source]
+
+    Calculates latent heat, or enthalpy, of melting. It is defined in terms of Absolute Salinity, SA, and sea pressure, p, and is valid in the ranges 0 < SA < 42 g kg^-1 and 0 < p < 10,000 dbar. This is based on the IAPWS Releases IAPWS-09 (for pure water), IAPWS-08 (for the saline compoonent of seawater and IAPWS-06 for ice Ih.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        latentheat_meltingarray-like, J/kg
+
+            latent heat of melting
+
+gsw.match_args_return(f)[source]
+
+    Decorator for most functions that operate on profile data.
+
+gsw.melting_ice_SA_CT_ratio(SA, CT, p, t_Ih)[source]
+
+    Calculates the ratio of SA to CT changes when ice melts into seawater. It is assumed that a small mass of ice melts into an infinite mass of seawater. Because of the infinite mass of seawater, the ice will always melt.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        t_Iharray-like
+
+            In-situ temperature of ice (ITS-90), degrees C
+
+    Returns
+
+        melting_ice_SA_CT_ratioarray-like, g kg^-1 K^-1
+
+            the ratio of SA to CT changes when ice melts into a large mass of seawater
+
+gsw.melting_ice_SA_CT_ratio_poly(SA, CT, p, t_Ih)[source]
+
+    Calculates the ratio of SA to CT changes when ice melts into seawater. It is assumed that a small mass of ice melts into an infinite mass of seawater. Because of the infinite mass of seawater, the ice will always melt.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        t_Iharray-like
+
+            In-situ temperature of ice (ITS-90), degrees C
+
+    Returns
+
+        melting_ice_SA_CT_ratioarray-like, g kg^-1 K^-1
+
+            the ratio of SA to CT changes when ice melts into a large mass of seawater
+
+gsw.melting_ice_equilibrium_SA_CT_ratio(SA, p)[source]
+
+    Calculates the ratio of SA to CT changes when ice melts into seawater with both the seawater and the seaice temperatures being almost equal to the equilibrium freezing temperature. It is assumed that a small mass of ice melts into an infinite mass of seawater. If indeed the temperature of the seawater and the ice were both equal to the freezing temperature, then no melting or freezing would occur; an imbalance between these three temperatures is needed for freezing or melting to occur (the three temperatures being (1) the seawater temperature, (2) the ice temperature, and (3) the freezing temperature.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        melting_ice_equilibrium_SA_CT_ratioarray-like, g/(kg K)
+
+            the ratio dSA/dCT of SA to CT changes when ice melts into seawater, with the seawater and seaice being close to the freezing temperature.
+
+gsw.melting_ice_equilibrium_SA_CT_ratio_poly(SA, p)[source]
+
+    Calculates the ratio of SA to CT changes when ice melts into seawater with both the seawater and the seaice temperatures being almost equal to the equilibrium freezing temperature. It is assumed that a small mass of ice melts into an infinite mass of seawater. If indeed the temperature of the seawater and the ice were both equal to the freezing temperature, then no melting or freezing would occur; an imbalance between these three temperatures is needed for freezing or melting to occur (the three temperatures being (1) the seawater temperature, (2) the ice temperature, and (3) the freezing temperature.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        melting_ice_equilibrium_SA_CT_ratioarray-like, g/(kg K)
+
+            the ratio dSA/dCT of SA to CT changes when ice melts into seawater, with the seawater and seaice being close to the freezing temperature.
+
+gsw.melting_ice_into_seawater(SA, CT, p, w_Ih, t_Ih)[source]
+
+    Calculates the final Absolute Salinity, final Conservative Temperature and final ice mass fraction that results when a given mass fraction of ice melts and is mixed into seawater whose properties are (SA,CT,p). This code takes the seawater to contain no dissolved air.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        w_Iharray-like
+
+            mass fraction of ice: the mass of ice divided by the sum of the masses of ice and seawater. 0 <= wIh <= 1. unitless.
+        t_Iharray-like
+
+            In-situ temperature of ice (ITS-90), degrees C
+
+    Returns
+
+        SA_finalarray-like, g/kg
+
+            Absolute Salinity of the seawater in the final state, whether or not any ice is present.
+        CT_finalarray-like, deg C
+
+            Conservative Temperature of the seawater in the the final state, whether or not any ice is present.
+        w_Ih_finalarray-like, unitless
+
+            mass fraction of ice in the final seawater-ice mixture. If this ice mass fraction is positive, the system is at thermodynamic equilibrium. If this ice mass fraction is zero there is no ice in the final state which consists only of seawater which is warmer than the freezing temperature.
+
+gsw.melting_seaice_SA_CT_ratio(SA, CT, p, SA_seaice, t_seaice)[source]
+
+    Calculates the ratio of SA to CT changes when sea ice melts into seawater. It is assumed that a small mass of sea ice melts into an infinite mass of seawater. Because of the infinite mass of seawater, the sea ice will always melt.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        SA_seaicearray-like
+
+            Absolute Salinity of sea ice: the mass fraction of salt in sea ice, expressed in g of salt per kg of sea ice.
+        t_seaicearray-like
+
+            In-situ temperature of the sea ice at pressure p (ITS-90), degrees C
+
+    Returns
+
+        melting_seaice_SA_CT_ratioarray-like, g/(kg K)
+
+            the ratio dSA/dCT of SA to CT changes when sea ice melts into a large mass of seawater
+
+gsw.melting_seaice_SA_CT_ratio_poly(SA, CT, p, SA_seaice, t_seaice)[source]
+
+    Calculates the ratio of SA to CT changes when sea ice melts into seawater. It is assumed that a small mass of sea ice melts into an infinite mass of seawater. Because of the infinite mass of seawater, the sea ice will always melt.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        SA_seaicearray-like
+
+            Absolute Salinity of sea ice: the mass fraction of salt in sea ice, expressed in g of salt per kg of sea ice.
+        t_seaicearray-like
+
+            In-situ temperature of the sea ice at pressure p (ITS-90), degrees C
+
+    Returns
+
+        melting_seaice_SA_CT_ratioarray-like, g/(kg K)
+
+            the ratio dSA/dCT of SA to CT changes when sea ice melts into a large mass of seawater
+
+gsw.melting_seaice_equilibrium_SA_CT_ratio(SA, p)[source]
+
+    Calculates the ratio of SA to CT changes when sea ice melts into seawater with both the seawater and the sea ice temperatures being almost equal to the equilibrium freezing temperature. It is assumed that a small mass of seaice melts into an infinite mass of seawater. If indeed the temperature of the seawater and the sea ice were both equal to the freezing temperature, then no melting or freezing would occur; an imbalance between these three temperatures is needed for freezing or melting to occur (the three temperatures being (1) the seawater temperature, (2) the sea ice temperature, and (3) the freezing temperature.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        melting_seaice_equilibrium_SA_CT_ratioarray-like, g/(kg K)
+
+            the ratio dSA/dCT of SA to CT changes when sea ice melts into seawater, with the seawater and sea ice being close to the freezing temperature.
+
+gsw.melting_seaice_equilibrium_SA_CT_ratio_poly(SA, p)[source]
+
+    Calculates the ratio of SA to CT changes when sea ice melts into seawater with both the seawater and the sea ice temperatures being almost equal to the equilibrium freezing temperature. It is assumed that a small mass of seaice melts into an infinite mass of seawater. If indeed the temperature of the seawater and the sea ice were both equal to the freezing temperature, then no melting or freezing would occur; an imbalance between these three temperatures is needed for freezing or melting to occur (the three temperatures being (1) the seawater temperature, (2) the sea ice temperature, and (3) the freezing temperature.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        melting_seaice_equilibrium_SA_CT_ratioarray-like, g/(kg K)
+
+            the ratio dSA/dCT of SA to CT changes when sea ice melts into seawater, with the seawater and sea ice being close to the freezing temperature.
+
+gsw.melting_seaice_into_seawater(SA, CT, p, w_seaice, SA_seaice, t_seaice)[source]
+
+    Calculates the Absolute Salinity and Conservative Temperature that results when a given mass of sea ice (or ice) melts and is mixed into a known mass of seawater (whose properties are (SA,CT,p)).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        w_seaicearray-like
+
+            mass fraction of ice: the mass of sea-ice divided by the sum of the masses of sea-ice and seawater. 0 <= wIh <= 1. unitless.
+        SA_seaicearray-like
+
+            Absolute Salinity of sea ice: the mass fraction of salt in sea ice, expressed in g of salt per kg of sea ice.
+        t_seaicearray-like
+
+            In-situ temperature of the sea ice at pressure p (ITS-90), degrees C
+
+    Returns
+
+        SA_finalarray-like, g/kg
+
+            Absolute Salinity of the mixture of the melted sea ice (or ice) and the orignal seawater
+        CT_finalarray-like, deg C
+
+            Conservative Temperature of the mixture of the melted sea ice (or ice) and the orignal seawater
+
+gsw.p_from_z(z, lat, geo_strf_dyn_height=0, sea_surface_geopotential=0)[source]
+
+    Calculates sea pressure from height using computationally-efficient 75-term expression for density, in terms of SA, CT and p (Roquet et al., 2015). Dynamic height anomaly, geo_strf_dyn_height, if provided, must be computed with its p_ref = 0 (the surface). Also if provided, sea_surface_geopotental is the geopotential at zero sea pressure. This function solves Eqn.(3.32.3) of IOC et al. (2010) iteratively for p.
+
+    Parameters
+
+        zarray-like
+
+            Depth, positive up, m
+        latarray-like
+
+            Latitude, -90 to 90 degrees
+        geo_strf_dyn_heightarray-like
+
+            dynamic height anomaly, m^2/s^2
+
+                Note that the reference pressure, p_ref, of geo_strf_dyn_height must be zero (0) dbar.
+
+        sea_surface_geopotentialarray-like
+
+            geopotential at zero sea pressure, m^2/s^2
+
+    Returns
+
+        parray-like, dbar
+
+            sea pressure ( i.e. absolute pressure - 10.1325 dbar )
+
+gsw.pchip_interp(x, y, xi, axis=0)[source]
+
+    Interpolate using Piecewise Cubic Hermite Interpolating Polynomial
+
+    This is a shape-preserving algorithm; it does not introduce new local extrema. The implementation in C that is wrapped here is largely taken from the scipy implementation, https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.PchipInterpolator.html.
+
+    Points outside the range of the interpolation table are filled using the end values in the table. (In contrast, scipy.interpolate.pchip_interpolate() extrapolates using the end polynomials.)
+
+    Parameters
+
+        x, yarray-like
+
+            Interpolation table x and y; n-dimensional, must be broadcastable to the same dimensions.
+        xiarray-like
+
+            One-dimensional array of new x values.
+        axisint, optional, default is 0
+
+            Axis along which xi is taken.
+
+    Returns
+
+        yiarray
+
+            Values of y interpolated to xi along the specified axis.
+
+gsw.pot_enthalpy_from_pt_ice(pt0_ice)[source]
+
+    Calculates the potential enthalpy of ice from potential temperature of ice (whose reference sea pressure is zero dbar).
+
+    Parameters
+
+        pt0_icearray-like
+
+            Potential temperature of ice (ITS-90), degrees C
+
+    Returns
+
+        pot_enthalpy_icearray-like, J/kg
+
+            potential enthalpy of ice
+
+gsw.pot_enthalpy_from_pt_ice_poly(pt0_ice)[source]
+
+    Calculates the potential enthalpy of ice from potential temperature of ice (whose reference sea pressure is zero dbar). This is a compuationally efficient polynomial fit to the potential enthalpy of ice.
+
+    Parameters
+
+        pt0_icearray-like
+
+            Potential temperature of ice (ITS-90), degrees C
+
+    Returns
+
+        pot_enthalpy_icearray-like, J/kg
+
+            potential enthalpy of ice
+
+gsw.pot_enthalpy_ice_freezing(SA, p)[source]
+
+    Calculates the potential enthalpy of ice at which seawater freezes.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        pot_enthalpy_ice_freezingarray-like, J/kg
+
+            potential enthalpy of ice at freezing of seawater
+
+gsw.pot_enthalpy_ice_freezing_first_derivatives(SA, p)[source]
+
+    Calculates the first derivatives of the potential enthalpy of ice at which seawater freezes, with respect to Absolute Salinity SA and pressure P (in Pa).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        pot_enthalpy_ice_freezing_SAarray-like, K kg/g
+
+            the derivative of the potential enthalpy of ice at freezing (ITS-90) with respect to Absolute salinity at fixed pressure [ K/(g/kg) ] i.e.
+        pot_enthalpy_ice_freezing_Parray-like, K/Pa
+
+            the derivative of the potential enthalpy of ice at freezing (ITS-90) with respect to pressure (in Pa) at fixed Absolute Salinity
+
+gsw.pot_enthalpy_ice_freezing_first_derivatives_poly(SA, p)[source]
+
+    Calculates the first derivatives of the potential enthalpy of ice Ih at which ice melts into seawater with Absolute Salinity SA and at pressure p. This code uses the comptationally efficient polynomial fit of the freezing potential enthalpy of ice Ih (McDougall et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        pot_enthalpy_ice_freezing_SAarray-like, J/g
+
+            the derivative of the potential enthalpy of ice at freezing (ITS-90) with respect to Absolute salinity at fixed pressure [ (J/kg)/(g/kg) ] i.e.
+        pot_enthalpy_ice_freezing_Parray-like, (J/kg)/Pa
+
+            the derivative of the potential enthalpy of ice at freezing (ITS-90) with respect to pressure (in Pa) at fixed Absolute Salinity
+
+gsw.pot_enthalpy_ice_freezing_poly(SA, p)[source]
+
+    Calculates the potential enthalpy of ice at which seawater freezes. The error of this fit ranges between -2.5 and 1 J/kg with an rms of 1.07, between SA of 0 and 120 g/kg and p between 0 and 10,000 dbar (the error in the fit is between -0.7 and 0.7 with an rms of 0.3, between SA of 0 and 120 g/kg and p between 0 and 5,000 dbar) when compared with the potential enthalpy calculated from the exact in-situ freezing temperature which is found by a Newton-Raphson iteration of the equality of the chemical potentials of water in seawater and in ice. Note that the potential enthalpy at freezing can be found by this exact method using the function gsw_pot_enthalpy_ice_freezing.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        pot_enthalpy_ice_freezingarray-like, J/kg
+
+            potential enthalpy of ice at freezing of seawater
+
+gsw.pot_rho_t_exact(SA, t, p, p_ref)[source]
+
+    Calculates potential density of seawater. Note. This function outputs potential density, not potential density anomaly; that is, 1000 kg/m^3 is not subtracted.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        p_refarray-like
+
+            Reference pressure, dbar
+
+    Returns
+
+        pot_rho_t_exactarray-like, kg/m^3
+
+            potential density (not potential density anomaly)
+
+gsw.pressure_coefficient_ice(t, p)[source]
+
+    Calculates pressure coefficient of ice.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        pressure_coefficient_icearray-like, Pa/K
+
+            pressure coefficient of ice
+
+gsw.pressure_freezing_CT(SA, CT, saturation_fraction)[source]
+
+    Calculates the pressure (in dbar) of seawater at the freezing temperature. That is, the output is the pressure at which seawater, with Absolute Salinity SA, Conservative Temperature CT, and with saturation_fraction of dissolved air, freezes. If the input values are such that there is no value of pressure in the range between 0 dbar and 10,000 dbar for which seawater is at the freezing temperature, the output, pressure_freezing, is put equal to NaN.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        saturation_fractionarray-like
+
+            Saturation fraction of dissolved air in seawater. (0..1)
+
+    Returns
+
+        pressure_freezingarray-like, dbar
+
+            sea pressure at which the seawater freezes ( i.e. absolute pressure - 10.1325 dbar )
+
+gsw.pt0_from_t(SA, t, p)[source]
+
+    Calculates potential temperature with reference pressure, p_ref = 0 dbar. The present routine is computationally faster than the more general function “gsw_pt_from_t(SA,t,p,p_ref)” which can be used for any reference pressure value. This subroutine calls “gsw_entropy_part(SA,t,p)”, “gsw_entropy_part_zerop(SA,pt0)” and “gsw_gibbs_pt0_pt0(SA,pt0)”.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        pt0array-like, deg C
+
+            potential temperature with reference sea pressure (p_ref) = 0 dbar.
+
+gsw.pt0_from_t_ice(t, p)[source]
+
+    Calculates potential temperature of ice Ih with a reference pressure of 0 dbar, from in-situ temperature, t.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        pt0_icearray-like, deg C
+
+            potential temperature of ice Ih with reference pressure of zero dbar (ITS-90)
+
+gsw.pt_first_derivatives(SA, CT)[source]
+
+    Calculates the following two partial derivatives of potential temperature (the regular potential temperature whose reference sea pressure is 0 dbar) (1) pt_SA, the derivative with respect to Absolute Salinity at constant Conservative Temperature, and (2) pt_CT, the derivative with respect to Conservative Temperature at constant Absolute Salinity.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+
+    Returns
+
+        pt_SAarray-like, K/(g/kg)
+
+            The derivative of potential temperature with respect to Absolute Salinity at constant Conservative Temperature.
+        pt_CTarray-like, unitless
+
+            The derivative of potential temperature with respect to Conservative Temperature at constant Absolute Salinity. pt_CT is dimensionless.
+
+gsw.pt_from_CT(SA, CT)[source]
+
+    Calculates potential temperature (with a reference sea pressure of zero dbar) from Conservative Temperature. This function uses 1.5 iterations through a modified Newton-Raphson (N-R) iterative solution proceedure, starting from a rational-function-based initial condition for both pt and dCT_dpt.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+
+    Returns
+
+        ptarray-like, deg C
+
+            potential temperature referenced to a sea pressure of zero dbar (ITS-90)
+
+gsw.pt_from_entropy(SA, entropy)[source]
+
+    Calculates potential temperature with reference pressure p_ref = 0 dbar and with entropy as an input variable.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        entropyarray-like
+
+            Specific entropy, J/(kg*K)
+
+    Returns
+
+        ptarray-like, deg C
+
+            potential temperature with reference sea pressure (p_ref) = 0 dbar.
+
+gsw.pt_from_pot_enthalpy_ice(pot_enthalpy_ice)[source]
+
+    Calculates the potential temperature of ice from the potential enthalpy of ice. The reference sea pressure of both the potential temperature and the potential enthalpy is zero dbar.
+
+    Parameters
+
+        pot_enthalpy_icearray-like
+
+            Potential enthalpy of ice, J/kg
+
+    Returns
+
+        pt0_icearray-like, deg C
+
+            potential temperature of ice (ITS-90)
+
+gsw.pt_from_pot_enthalpy_ice_poly(pot_enthalpy_ice)[source]
+
+    Calculates the potential temperature of ice (whose reference sea pressure is zero dbar) from the potential enthalpy of ice. This is a compuationally efficient polynomial fit to the potential enthalpy of ice.
+
+    Parameters
+
+        pot_enthalpy_icearray-like
+
+            Potential enthalpy of ice, J/kg
+
+    Returns
+
+        pt0_icearray-like, deg C
+
+            potential temperature of ice (ITS-90)
+
+gsw.pt_from_t(SA, t, p, p_ref)[source]
+
+    Calculates potential temperature with the general reference pressure, p_ref, from in-situ temperature, t. This function calls “gsw_entropy_part” which evaluates entropy except for the parts which are a function of Absolute Salinity alone. A faster gsw routine exists if p_ref is indeed zero dbar. This routine is “gsw_pt0_from_t(SA,t,p)”.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        p_refarray-like
+
+            Reference pressure, dbar
+
+    Returns
+
+        ptarray-like, deg C
+
+            potential temperature with reference pressure, p_ref, on the ITS-90 temperature scale
+
+gsw.pt_from_t_ice(t, p, p_ref)[source]
+
+    Calculates potential temperature of ice Ih with the general reference pressure, p_ref, from in-situ temperature, t.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        p_refarray-like
+
+            Reference pressure, dbar
+
+    Returns
+
+        pt_icearray-like, deg C
+
+            potential temperature of ice Ih with reference pressure, p_ref, on the ITS-90 temperature scale
+
+gsw.pt_second_derivatives(SA, CT)[source]
+
+    Calculates the following three second-order derivatives of potential temperature (the regular potential temperature which has a reference sea pressure of 0 dbar), (1) pt_SA_SA, the second derivative with respect to Absolute Salinity at constant Conservative Temperature, (2) pt_SA_CT, the derivative with respect to Conservative Temperature and Absolute Salinity, and (3) pt_CT_CT, the second derivative with respect to Conservative Temperature at constant Absolute Salinity.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+
+    Returns
+
+        pt_SA_SAarray-like, K/((g/kg)^2)
+
+            The second derivative of potential temperature (the regular potential temperature which has reference sea pressure of 0 dbar) with respect to Absolute Salinity at constant Conservative Temperature.
+        pt_SA_CTarray-like, 1/(g/kg)
+
+            The derivative of potential temperature with respect to Absolute Salinity and Conservative Temperature.
+        pt_CT_CTarray-like, 1/K
+
+            The second derivative of potential temperature (the regular one with p_ref = 0 dbar) with respect to Conservative Temperature at constant SA.
+
+gsw.rho(SA, CT, p)[source]
+
+    Calculates in-situ density from Absolute Salinity and Conservative Temperature, using the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        rhoarray-like, kg/m
+
+            in-situ density
+
+gsw.rho_alpha_beta(SA, CT, p)[source]
+
+    Calculates in-situ density, the appropiate thermal expansion coefficient and the appropriate saline contraction coefficient of seawater from Absolute Salinity and Conservative Temperature. This function uses the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        rhoarray-like, kg/m
+
+            in-situ density
+        alphaarray-like, 1/K
+
+            thermal expansion coefficient with respect to Conservative Temperature
+        betaarray-like, kg/g
+
+            saline (i.e. haline) contraction coefficient at constant Conservative Temperature
+
+gsw.rho_first_derivatives(SA, CT, p)[source]
+
+    Calculates the three (3) partial derivatives of in-situ density with respect to Absolute Salinity, Conservative Temperature and pressure. Note that the pressure derivative is done with respect to pressure in Pa, not dbar. This function uses the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        rho_SAarray-like, (kg/m^3)(g/kg)^-1
+
+            partial derivative of density with respect to Absolute Salinity
+        rho_CTarray-like, kg/(m^3 K)
+
+            partial derivative of density with respect to Conservative Temperature
+        rho_Parray-like, kg/(m^3 Pa)
+
+            partial derivative of density with respect to pressure in Pa
+
+gsw.rho_first_derivatives_wrt_enthalpy(SA, CT, p)[source]
+
+    Calculates the following two first-order derivatives of specific volume (v), (1) rho_SA, first-order derivative with respect to Absolute Salinity at constant CT & p. (2) rho_h, first-order derivative with respect to SA & CT at constant p.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        rho_SAarray-like, J/(kg (g/kg)^2)
+
+            The first derivative of rho with respect to Absolute Salinity at constant CT & p.
+        rho_harray-like, J/(kg K(g/kg))
+
+            The first derivative of rho with respect to SA and CT at constant p.
+
+gsw.rho_ice(t, p)[source]
+
+    Calculates in-situ density of ice from in-situ temperature and pressure. Note that the output, rho_ice, is density, not density anomaly; that is, 1000 kg/m^3 is not subracted from it.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        rho_icearray-like, kg/m^3
+
+            in-situ density of ice (not density anomaly)
+
+gsw.rho_second_derivatives(SA, CT, p)[source]
+
+    Calculates the following five second-order derivatives of rho, (1) rho_SA_SA, second-order derivative with respect to Absolute Salinity at constant CT & p. (2) rho_SA_CT, second-order derivative with respect to SA & CT at constant p. (3) rho_CT_CT, second-order derivative with respect to CT at constant SA & p. (4) rho_SA_P, second-order derivative with respect to SA & P at constant CT. (5) rho_CT_P, second-order derivative with respect to CT & P at constant SA.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        rho_SA_SAarray-like, (kg/m^3)(g/kg)^-2
+
+            The second-order derivative of rho with respect to Absolute Salinity at constant CT & p.
+        rho_SA_CTarray-like, (kg/m^3)(g/kg)^-1 K^-1
+
+            The second-order derivative of rho with respect to SA and CT at constant p.
+        rho_CT_CTarray-like, (kg/m^3) K^-2
+
+            The second-order derivative of rho with respect to CT at constant SA & p
+        rho_SA_Parray-like, (kg/m^3)(g/kg)^-1 Pa^-1
+
+            The second-order derivative with respect to SA & P at constant CT.
+        rho_CT_Parray-like, (kg/m^3) K^-1 Pa^-1
+
+            The second-order derivative with respect to CT & P at constant SA.
+
+gsw.rho_second_derivatives_wrt_enthalpy(SA, CT, p)[source]
+
+    Calculates the following three second-order derivatives of rho with respect to enthalpy, (1) rho_SA_SA, second-order derivative with respect to Absolute Salinity at constant h & p. (2) rho_SA_h, second-order derivative with respect to SA & h at constant p. (3) rho_h_h, second-order derivative with respect to h at constant SA & p.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        rho_SA_SAarray-like, J/(kg (g/kg)^2)
+
+            The second-order derivative of rho with respect to Absolute Salinity at constant h & p.
+        rho_SA_harray-like, J/(kg K(g/kg))
+
+            The second-order derivative of rho with respect to SA and h at constant p.
+        rho_h_harray-like,
+
+            The second-order derivative of rho with respect to h at constant SA & p
+
+gsw.rho_t_exact(SA, t, p)[source]
+
+    Calculates in-situ density of seawater from Absolute Salinity and in-situ temperature. Note that the output, rho, is density, not density anomaly; that is, 1000 kg/m^3 is not subracted from it.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        rho_t_exactarray-like, kg/m^3
+
+            in-situ density (not density anomaly)
+
+gsw.seaice_fraction_to_freeze_seawater(SA, CT, p, SA_seaice, t_seaice)[source]
+
+    Calculates the mass fraction of sea ice (mass of sea ice divided by mass of sea ice plus seawater), which, when melted into seawater having the properties (SA,CT,p) causes the final seawater to be at the freezing temperature. The other outputs are the Absolute Salinity and Conservative Temperature of the final seawater.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        SA_seaicearray-like
+
+            Absolute Salinity of sea ice: the mass fraction of salt in sea ice, expressed in g of salt per kg of sea ice.
+        t_seaicearray-like
+
+            In-situ temperature of the sea ice at pressure p (ITS-90), degrees C
+
+    Returns
+
+        SA_freezearray-like, g/kg
+
+            Absolute Salinity of seawater after the mass fraction of sea ice, w_seaice, at temperature t_seaice has melted into the original seawater, and the final mixture is at the freezing temperature of seawater.
+        CT_freezearray-like, deg C
+
+            Conservative Temperature of seawater after the mass fraction, w_seaice, of sea ice at temperature t_seaice has melted into the original seawater, and the final mixture is at the freezing temperature of seawater.
+        w_seaicearray-like, unitless
+
+            mass fraction of sea ice, at SA_seaice and t_seaice, which, when melted into seawater at (SA,CT,p) leads to the final mixed seawater being at the freezing temperature. This output is between 0 and 1.
+
+gsw.sigma0(SA, CT)[source]
+
+    Calculates potential density anomaly with reference pressure of 0 dbar, this being this particular potential density minus 1000 kg/m^3. This function has inputs of Absolute Salinity and Conservative Temperature. This function uses the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+
+    Returns
+
+        sigma0array-like, kg/m^3
+
+            potential density anomaly with respect to a reference pressure of 0 dbar, that is, this potential density - 1000 kg/m^3.
+
+gsw.sigma1(SA, CT)[source]
+
+    Calculates potential density anomaly with reference pressure of 1000 dbar, this being this particular potential density minus 1000 kg/m^3. This function has inputs of Absolute Salinity and Conservative Temperature. This function uses the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+
+    Returns
+
+        sigma1array-like, kg/m^3
+
+            potential density anomaly with respect to a reference pressure of 1000 dbar, that is, this potential density - 1000 kg/m^3.
+
+gsw.sigma2(SA, CT)[source]
+
+    Calculates potential density anomaly with reference pressure of 2000 dbar, this being this particular potential density minus 1000 kg/m^3. Temperature. This function uses the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+
+    Returns
+
+        sigma2array-like, kg/m^3
+
+            potential density anomaly with respect to a reference pressure of 2000 dbar, that is, this potential density - 1000 kg/m^3.
+
+gsw.sigma3(SA, CT)[source]
+
+    Calculates potential density anomaly with reference pressure of 3000 dbar, this being this particular potential density minus 1000 kg/m^3. Temperature. This function uses the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+
+    Returns
+
+        sigma3array-like, kg/m^3
+
+            potential density anomaly with respect to a reference pressure of 3000 dbar, that is, this potential density - 1000 kg/m^3.
+
+gsw.sigma4(SA, CT)[source]
+
+    Calculates potential density anomaly with reference pressure of 4000 dbar, this being this particular potential density minus 1000 kg/m^3. Temperature. This function uses the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+
+    Returns
+
+        sigma4array-like, kg/m^3
+
+            potential density anomaly with respect to a reference pressure of 4000 dbar, that is, this potential density - 1000 kg/m^3.
+
+gsw.sound_speed(SA, CT, p)[source]
+
+    Calculates the speed of sound in seawater. This function has inputs of Absolute Salinity and Conservative Temperature. This function uses the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        sound_speedarray-like, m/s
+
+            speed of sound in seawater
+
+gsw.sound_speed_ice(t, p)[source]
+
+    Calculates the compression speed of sound in ice.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        sound_speed_icearray-like, m/s
+
+            compression speed of sound in ice
+
+gsw.sound_speed_t_exact(SA, t, p)[source]
+
+    Calculates the speed of sound in seawater.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        sound_speed_t_exactarray-like, m/s
+
+            speed of sound in seawater
+
+gsw.specvol(SA, CT, p)[source]
+
+    Calculates specific volume from Absolute Salinity, Conservative Temperature and pressure, using the computationally-efficient 75-term polynomial expression for specific volume (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        specvolarray-like, m^3/kg
+
+            specific volume
+
+gsw.specvol_alpha_beta(SA, CT, p)[source]
+
+    Calculates specific volume, the appropiate thermal expansion coefficient and the appropriate saline contraction coefficient of seawater from Absolute Salinity and Conservative Temperature. This function uses the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        specvolarray-like, m/kg
+
+            specific volume
+        alphaarray-like, 1/K
+
+            thermal expansion coefficient with respect to Conservative Temperature
+        betaarray-like, kg/g
+
+            saline (i.e. haline) contraction coefficient at constant Conservative Temperature
+
+gsw.specvol_anom_standard(SA, CT, p)[source]
+
+    Calculates specific volume anomaly from Absolute Salinity, Conservative Temperature and pressure. It uses the computationally-efficient expression for specific volume as a function of SA, CT and p (Roquet et al., 2015). The reference value to which the anomally is calculated has an Absolute Salinity of SSO and Conservative Temperature equal to 0 degress C.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        specvol_anomarray-like, m^3/kg
+
+            specific volume anomaly
+
+gsw.specvol_first_derivatives(SA, CT, p)[source]
+
+    Calculates the following three first-order derivatives of specific volume (v), (1) v_SA, first-order derivative with respect to Absolute Salinity at constant CT & p. (2) v_CT, first-order derivative with respect to CT at constant SA & p. (3) v_P, first-order derivative with respect to P at constant SA and CT.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        v_SAarray-like, (m^3/kg)(g/kg)^-1
+
+            The first derivative of specific volume with respect to Absolute Salinity at constant CT & p.
+        v_CTarray-like, m^3/(K kg)
+
+            The first derivative of specific volume with respect to CT at constant SA and p.
+        v_Parray-like, m^3/(Pa kg)
+
+            The first derivative of specific volume with respect to P at constant SA and CT.
+
+gsw.specvol_first_derivatives_wrt_enthalpy(SA, CT, p)[source]
+
+    Calculates the following two first-order derivatives of specific volume (v), (1) v_SA_wrt_h, first-order derivative with respect to Absolute Salinity at constant h & p. (2) v_h, first-order derivative with respect to h at constant SA & p.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        v_SA_wrt_harray-like, (m^3/kg)(g/kg)^-1 (J/kg)^-1
+
+            The first derivative of specific volume with respect to Absolute Salinity at constant CT & p.
+        v_harray-like, (m^3/kg)(J/kg)^-1
+
+            The first derivative of specific volume with respect to SA and CT at constant p.
+
+gsw.specvol_ice(t, p)[source]
+
+    Calculates the specific volume of ice.
+
+    Parameters
+
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        specvol_icearray-like, m^3/kg
+
+            specific volume
+
+gsw.specvol_second_derivatives(SA, CT, p)[source]
+
+    Calculates the following five second-order derivatives of specific volume (v), (1) v_SA_SA, second-order derivative with respect to Absolute Salinity at constant CT & p. (2) v_SA_CT, second-order derivative with respect to SA & CT at constant p. (3) v_CT_CT, second-order derivative with respect to CT at constant SA and p. (4) v_SA_P, second-order derivative with respect to SA & P at constant CT. (5) v_CT_P, second-order derivative with respect to CT & P at constant SA.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        v_SA_SAarray-like, (m^3/kg)(g/kg)^-2
+
+            The second derivative of specific volume with respect to Absolute Salinity at constant CT & p.
+        v_SA_CTarray-like, (m^3/kg)(g/kg)^-1 K^-1
+
+            The second derivative of specific volume with respect to SA and CT at constant p.
+        v_CT_CTarray-like, (m^3/kg) K^-2)
+
+            The second derivative of specific volume with respect to CT at constant SA and p.
+        v_SA_Parray-like, (m^3/kg) Pa^-1
+
+            The second derivative of specific volume with respect to SA and P at constant CT.
+        v_CT_Parray-like, (m^3/kg) K^-1 Pa^-1
+
+            The second derivative of specific volume with respect to CT and P at constant SA.
+
+gsw.specvol_second_derivatives_wrt_enthalpy(SA, CT, p)[source]
+
+    Calculates the following three first-order derivatives of specific volume (v) with respect to enthalpy, (1) v_SA_SA_wrt_h, second-order derivative with respect to Absolute Salinity at constant h & p. (2) v_SA_h, second-order derivative with respect to SA & h at constant p. (3) v_h_h, second-order derivative with respect to h at constant SA & p.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        v_SA_SA_wrt_harray-like, (m^3/kg)(g/kg)^-2 (J/kg)^-1
+
+            The second-order derivative of specific volume with respect to Absolute Salinity at constant h & p.
+        v_SA_harray-like, (m^3/kg)(g/kg)^-1 (J/kg)^-1
+
+            The second-order derivative of specific volume with respect to SA and h at constant p.
+        v_h_harray-like, (m^3/kg)(J/kg)^-2
+
+            The second-order derivative with respect to h at constant SA & p.
+
+gsw.specvol_t_exact(SA, t, p)[source]
+
+    Calculates the specific volume of seawater.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        specvol_t_exactarray-like, m^3/kg
+
+            specific volume
+
+gsw.spiciness0(SA, CT)[source]
+
+    Calculates spiciness from Absolute Salinity and Conservative Temperature at a pressure of 0 dbar, as described by McDougall and Krzysik (2015). This routine is based on the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+
+    Returns
+
+        spiciness0array-like, kg/m^3
+
+            spiciness referenced to a pressure of 0 dbar, i.e. the surface
+
+gsw.spiciness1(SA, CT)[source]
+
+    Calculates spiciness from Absolute Salinity and Conservative Temperature at a pressure of 1000 dbar, as described by McDougall and Krzysik (2015). This routine is based on the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+
+    Returns
+
+        spiciness1array-like, kg/m^3
+
+            spiciness referenced to a pressure of 1000 dbar
+
+gsw.spiciness2(SA, CT)[source]
+
+    Calculates spiciness from Absolute Salinity and Conservative Temperature at a pressure of 2000 dbar, as described by McDougall and Krzysik (2015). This routine is based on the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+
+    Returns
+
+        spiciness2array-like, kg/m^3
+
+            spiciness referenced to a pressure of 2000 dbar
+
+gsw.t90_from_t68(t68)[source]
+
+    ITS-90 temperature from IPTS-68 temperature
+
+    This conversion should be applied to all in-situ data collected between 1/1/1968 and 31/12/1989.
+
+gsw.t_deriv_chem_potential_water_t_exact(SA, t, p)[source]
+
+    Calculates the temperature derivative of the chemical potential of water in seawater so that it is valid at exactly SA = 0.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        tarray-like
+
+            In-situ temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        chem_potential_water_dtarray-like, J g^-1 K^-1
+
+            temperature derivative of the chemical potential of water in seawater
+
+gsw.t_freezing(SA, p, saturation_fraction)[source]
+
+    Calculates the in-situ temperature at which seawater freezes. The in-situ temperature freezing point is calculated from the exact in-situ freezing temperature which is found by a modified Newton-Raphson iteration (McDougall and Wotherspoon, 2013) of the equality of the chemical potentials of water in seawater and in ice.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        saturation_fractionarray-like
+
+            Saturation fraction of dissolved air in seawater. (0..1)
+
+    Returns
+
+        t_freezingarray-like, deg C
+
+            in-situ temperature at which seawater freezes. (ITS-90)
+
+gsw.t_freezing_first_derivatives(SA, p, saturation_fraction)[source]
+
+    Calculates the first derivatives of the in-situ temperature at which seawater freezes with respect to Absolute Salinity SA and pressure P (in Pa). These expressions come from differentiating the expression that defines the freezing temperature, namely the equality between the chemical potentials of water in seawater and in ice.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        saturation_fractionarray-like
+
+            Saturation fraction of dissolved air in seawater. (0..1)
+
+    Returns
+
+        tfreezing_SAarray-like, K kg/g
+
+            the derivative of the in-situ freezing temperature (ITS-90) with respect to Absolute Salinity at fixed pressure [ K/(g/kg) ] i.e.
+        tfreezing_Parray-like, K/Pa
+
+            the derivative of the in-situ freezing temperature (ITS-90) with respect to pressure (in Pa) at fixed Absolute Salinity
+
+gsw.t_freezing_first_derivatives_poly(SA, p, saturation_fraction)[source]
+
+    Calculates the frist derivatives of the in-situ temperature at which seawater freezes with respect to Absolute Salinity SA and pressure P (in Pa). These expressions come from differentiating the expression that defines the freezing temperature, namely the equality between the chemical potentials of water in seawater and in ice.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        saturation_fractionarray-like
+
+            Saturation fraction of dissolved air in seawater. (0..1)
+
+    Returns
+
+        tfreezing_SAarray-like, K kg/g
+
+            the derivative of the in-situ freezing temperature (ITS-90) with respect to Absolute Salinity at fixed pressure [ K/(g/kg) ] i.e.
+        tfreezing_Parray-like, K/Pa
+
+            the derivative of the in-situ freezing temperature (ITS-90) with respect to pressure (in Pa) at fixed Absolute Salinity
+
+gsw.t_freezing_poly(SA, p, saturation_fraction)[source]
+
+    Calculates the in-situ temperature at which seawater freezes from a comptationally efficient polynomial.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        saturation_fractionarray-like
+
+            Saturation fraction of dissolved air in seawater. (0..1)
+
+    Returns
+
+        t_freezingarray-like, deg C
+
+            in-situ temperature at which seawater freezes. (ITS-90)
+
+gsw.t_from_CT(SA, CT, p)[source]
+
+    Calculates in-situ temperature from the Conservative Temperature of seawater.
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        tarray-like, deg C
+
+            in-situ temperature (ITS-90)
+
+gsw.t_from_pt0_ice(pt0_ice, p)[source]
+
+    Calculates in-situ temperature from the potential temperature of ice Ih with reference pressure, p_ref, of 0 dbar (the surface), and the in-situ pressure.
+
+    Parameters
+
+        pt0_icearray-like
+
+            Potential temperature of ice (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        tarray-like, deg C
+
+            in-situ temperature (ITS-90)
+
+gsw.thermobaric(SA, CT, p)[source]
+
+    Calculates the thermobaric coefficient of seawater with respect to Conservative Temperature. This routine is based on the computationally-efficient expression for specific volume in terms of SA, CT and p (Roquet et al., 2015).
+
+    Parameters
+
+        SAarray-like
+
+            Absolute Salinity, g/kg
+        CTarray-like
+
+            Conservative Temperature (ITS-90), degrees C
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+
+    Returns
+
+        thermobaricarray-like, 1/(K Pa)
+
+            thermobaric coefficient with respect to Conservative Temperature.
+
+gsw.z_from_p(p, lat, geo_strf_dyn_height=0, sea_surface_geopotential=0)[source]
+
+    Calculates height from sea pressure using the computationally-efficient 75-term expression for specific volume in terms of SA, CT and p (Roquet et al., 2015). Dynamic height anomaly, geo_strf_dyn_height, if provided, must be computed with its p_ref = 0 (the surface). Also if provided, sea_surface_geopotental is the geopotential at zero sea pressure. This function solves Eqn.(3.32.3) of IOC et al. (2010).
+
+    Parameters
+
+        parray-like
+
+            Sea pressure (absolute pressure minus 10.1325 dbar), dbar
+        latarray-like
+
+            Latitude, -90 to 90 degrees
+        geo_strf_dyn_heightarray-like
+
+            dynamic height anomaly, m^2/s^2
+
+                Note that the reference pressure, p_ref, of geo_strf_dyn_height must be zero (0) dbar.
+
+        sea_surface_geopotentialarray-like
+
+            geopotential at zero sea pressure, m^2/s^2
+
+    Returns
+
+        zarray-like, m
+
+            height
+
